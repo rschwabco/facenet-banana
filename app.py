@@ -21,9 +21,11 @@ def inference(data: Dict[str, Any]) -> List[Dict[str, Any]]:
     global mtcnn
     global resnet
 
-    imageData = data.get("inputs").get("image")
+    imageData = data.get("image")
+
     image = Image.open(BytesIO(base64.b64decode(imageData)))
     face_batch = mtcnn([image])
+
     face_batch = [i for i in face_batch if i is not None]
     if face_batch:
         aligned = torch.stack(face_batch)
